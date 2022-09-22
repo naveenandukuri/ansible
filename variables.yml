@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  vars:
+  - name: naveen
+    location: 
+        - Hyderabad 
+        - banglore
+    credentials: 
+       username: naveen
+       password: admin123
+  tasks:
+    - name: print string variables
+      debug:
+        msg: "{{name}}"
+
+    - name: print dictonary variables
+      debug: 
+        msg: "{{credentials.password}}"
+
+    - name: print list variables
+      debug: 
+        msg: "{{location[1]}}"

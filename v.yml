@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    - pkg: apache2
+    - pkg1: httpd
+
+  tasks:
+    - name: installing "{{pkg}}"
+      package:
+        name: "{{pkg}}"
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: installing "{{pkg1}}"
+      package:
+        name: "{{pkg1}}"
+        state: present
+      notify: service "{{pkg1}}"
+      when: ansible_distribution == "RedHat"
+
+    - name: copying index file
+      copy:
+        src: index.html
+        dest: /var/www/html/index.html
+      notify: service "{{pkg1}}"
+
+    - name: debug
+      debug:
+        msg: "{{ansible_distribution}}"
+
+  handlers:
+  - name: service "{{pkg1}}"
+    service:
+      name: "{{pkg1}}"
+      state: started
+

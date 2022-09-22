@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: yes
+  tasks: 
+   - name: loop
+     apt:
+       name: "{{item}}"
+       state: present
+     when: ansible_distribution == "Ubuntu"
+     loop: 
+      - curl
+      - vim
+      - nano
+      - wget
+      - docker.io
+
+   - name: loop1
+     yum:
+       name: "{{item}}"
+       state: present
+     when: ansible_distribution == "RedHat"
+     loop:
+      - curl
+      - vim
+      - nano
+      - wget
+

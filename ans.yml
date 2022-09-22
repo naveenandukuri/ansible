@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: facts
+      debug:
+        msg: "{{ansible_facts.distribution_release}}"
+

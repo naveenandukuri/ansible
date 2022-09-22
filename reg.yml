@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: yes
+  tasks: 
+   - name: reg variables example
+     command: ls -a
+     register: test
+
+   - name: printing the register
+     debug: 
+       msg: "{{test.stdout_lines}}"
+         
+
